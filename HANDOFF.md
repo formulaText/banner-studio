@@ -6,13 +6,13 @@
 
 ```sh
 git fetch origin
-git switch feat/integrated-banner-studio
+git switch fix/gate-passphrase-ba7demo
 cd app
 npm ci
 npm run dev
 ```
 
-`http://127.0.0.1:5173/banner-studio/` を開く。デモ合言葉 `banner-demo` は公開情報。本物の認証ではない。デモ制作から画像追加→タイトル→出力先→書き出し→3件PNGを確認。自動保存の「保存済み」を待つ。素材つき移行は素材の同梱許諾を確認して設定のバックアップを使う。
+`http://127.0.0.1:5173/banner-studio/` を開く。デモ合言葉 `ba7demo` は公開情報。本物の認証ではない。デモ制作から画像追加→タイトル→出力先→書き出し→3件PNGを確認。自動保存の「保存済み」を待つ。素材つき移行は素材の同梱許諾を確認して設定のバックアップを使う。
 
 ```sh
 npm run typecheck
@@ -61,3 +61,14 @@ python scripts/verify_requirements.py
 - REQ-IDの完了/未完判定は変更なし。既存の185REQ対応表・未達・既知バグを継続。実機、公開URL、実際のGitHub Actions配信は未検証。既存の500 kB超チャンク警告あり。
 - 次のローカル確認: `cd app && npm ci && npm run typecheck && npm run lint && npm test && npm run build && npm run e2e`。
 - 次の利用者操作: PRレビュー → 利用者の判断でmainへマージ。初回公開を指示した後に [配信手順](ops/github-pages.md) に沿ってPagesのSourceと手動実行を設定する。今回ワークフローは起動しない。
+
+
+## 合言葉変更（2026-11-07 JST）
+
+- 基点: main `9339824`。専用ブランチ: `fix/gate-passphrase-ba7demo`。
+- 合言葉を `ba7demo` へ変更。アプリ変更は `app/src/gate.ts` の既定SHA-256と `app/src/App.tsx` のヒント文字列のみ。README、環境設定例、配信手順、テストを追従更新。
+- 型検査・Lint・ビルド成功。単体28件合格、E2E12件合格／既存の重複2件スキップ。ビルド成果物もPC／モバイル表示で新合言葉・旧入力拒否・セッション保持・ログアウト・再ログインを確認。旧ハッシュのセッション拒否も単体／E2Eで確認。
+- 詳細・実行ログ: [合言葉変更の検証記録](verification/gate-passphrase.md)。実機と実配信は未検証。既存の500 kB超チャンク警告あり。
+- 関連REQ: OPS-001/003の今回のローカル試験範囲を確認。REQ全体の完了/未完判定と既知バグは変更なし。実機・実配信の未完項目は継続。
+- 次の確認コマンド: `cd app && npm run typecheck && npm run lint && npm test && npm run build && npm run e2e`。
+- レビュー用PRとして提出。mainへのコミット・マージ、Pages設定変更、配信ワークフローの手動起動は行わない。初回公開は別途本人の指示後。

@@ -138,7 +138,7 @@ function Gate({ onEnter }: { onEnter: () => void }) {
           制作室を開く <ChevronRight size={18} />
         </button>
         {error && <p role="alert">{error}</p>}
-        <p className="hint">開発用デモの合言葉：banner-demo</p>
+        <p className="hint">開発用デモの合言葉：ba7demo</p>
         <small>
           これは簡易的な入口です。認証・秘密保護の機能ではなく、公開ソースや配信ファイルは隠せません。
         </small>

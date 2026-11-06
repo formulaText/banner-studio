@@ -4,7 +4,7 @@ export const gateConfig = {
   enabled: import.meta.env.VITE_GATE_ENABLED !== "false",
   digest:
     import.meta.env.VITE_GATE_SHA256 ||
-    "0e6edc8b65be8a17d8d3bebce0ff4a891b7628fed6ee15a43c59dd205c360193",
+    "141328dc7f8cadee4e30d0f747725219aaac9e6a9dd67abc665d4a106ba3dfbf",
 };
 export const gateKey = "banner-studio-gate";
 export function gatePassed() {

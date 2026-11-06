@@ -52,10 +52,13 @@ try {
     await page.goto(base);
     await expect(page.getByLabel("合言葉", { exact: true })).toBeVisible();
     await expect(page.getByLabel("タイトル", { exact: true })).toHaveCount(0);
-    await page.getByLabel("合言葉", { exact: true }).fill("wrong");
-    await page.getByRole("button", { name: "制作室を開く" }).click();
-    await expect(page.getByRole("alert")).toContainText("合言葉が違います");
-    await page.getByLabel("合言葉", { exact: true }).fill("banner-demo");
+    for (const value of ["wrong", "banner-demo"]) {
+      await page.getByLabel("合言葉", { exact: true }).fill(value);
+      await page.getByRole("button", { name: "制作室を開く" }).click();
+      await expect(page.getByRole("alert")).toContainText("合言葉が違います");
+      await expect(page.getByLabel("タイトル", { exact: true })).toHaveCount(0);
+    }
+    await page.getByLabel("合言葉", { exact: true }).fill("ba7demo");
     await page.getByRole("button", { name: "制作室を開く" }).click();
     await expect(page.getByLabel("タイトル", { exact: true })).toBeVisible();
     await expect(page.getByText("描画中…")).toHaveCount(0);
@@ -64,6 +67,9 @@ try {
     await page.getByLabel("ログアウト").click();
     await page.reload();
     await expect(page.getByLabel("合言葉", { exact: true })).toBeVisible();
+    await page.getByLabel("合言葉", { exact: true }).fill("ba7demo");
+    await page.getByRole("button", { name: "制作室を開く" }).click();
+    await expect(page.getByLabel("タイトル", { exact: true })).toBeVisible();
     expect(errors).toEqual([]);
     expect(badResponses).toEqual([]);
     expect(
@@ -81,7 +87,7 @@ try {
     await expect(freshPage.getByLabel("合言葉", { exact: true })).toBeVisible();
     await fresh.close();
     console.log(
-      `${name}: PASS initial gate, wrong/correct phrase, reload, logout, fresh session, assets, no page errors`,
+      `${name}: PASS initial gate, wrong/old phrase rejection, new phrase login, reload, logout, re-login, fresh session, assets, no page errors`,
     );
   }
   for (const path of [
