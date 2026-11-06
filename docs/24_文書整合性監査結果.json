@@ -1,0 +1,43 @@
+{
+  "reviewDate": "2026-11-06",
+  "packVersion": "0.3.2",
+  "status": "documents_only_app_not_developed",
+  "requirementsCount": 185,
+  "testCasesCount": 218,
+  "requirementTypes": {
+    "ユーザー明示・合意": 97,
+    "設計提案・詳細化": 70,
+    "安全・品質条件": 18
+  },
+  "domains": {
+    "TPL": 12,
+    "LAY": 14,
+    "IMG": 17,
+    "CMP": 21,
+    "TXT": 10,
+    "FNT": 8,
+    "LBL": 4,
+    "AST": 11,
+    "FX": 13,
+    "PRT": 5,
+    "AUT": 6,
+    "DAT": 13,
+    "EXP": 7,
+    "UI": 8,
+    "DBG": 11,
+    "SEC": 6,
+    "QA": 11,
+    "OPS": 8
+  },
+  "duplicateReqIds": [],
+  "duplicateTcIds": [],
+  "orphanCaseReqIds": [],
+  "uncoveredReqIds": [],
+  "checks": {
+    "all_initial_implementation_states_unimplemented": true,
+    "all_tests_unexecuted": true
+  },
+  "errors": [],
+  "passed": true,
+  "note": "文書間の構造的な照合であり、コードや実機の動作検証ではない。"
+}

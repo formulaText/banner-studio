@@ -1,0 +1,175 @@
+{
+  "title": "複数サービス向けバナー作成Webアプリ 開発準備パック（GitHub Pages公開＋簡易ゲート確定）",
+  "packVersion": "0.3.2",
+  "preparedOn": "2026-11-06",
+  "buildStatus": "documents_only_app_not_developed_not_sent_to_coding_agent",
+  "counts": {
+    "requirements": 185,
+    "initialTestCases": 218,
+    "userOrAgreedRequirements": 97,
+    "designProposals": 70,
+    "safetyQuality": 18
+  },
+  "files": [
+    {
+      "path": "00_README_開発パック.md",
+      "sha256": "2022492ca29b759f7ccfbcf29cdd1e5c009594135bab497a867b6441fa35ac75",
+      "sizeBytes": 9019
+    },
+    {
+      "path": "01_統合要件定義.md",
+      "sha256": "688d837e08ba24749506450d63de8670c7882c5d0af4941850f36935b6305b3d",
+      "sizeBytes": 20074
+    },
+    {
+      "path": "02_技術設計・データモデル.md",
+      "sha256": "4463d35ab991b7401a4e372b111f91ab7d755e575a85b935df95b2f9fe69aedf",
+      "sizeBytes": 18938
+    },
+    {
+      "path": "03_先行研究・技術根拠.md",
+      "sha256": "39cb0b2aaebcf1283ed4f9fd37332ca9c45edf6219dfee1872a47e57146a6ac9",
+      "sizeBytes": 10215
+    },
+    {
+      "path": "04_デバッグ・診断仕様.md",
+      "sha256": "d74b817b7984f95f56bf5e4361f53efc026c04032bf2c19a96116643f21f58ff",
+      "sizeBytes": 9283
+    },
+    {
+      "path": "05_検証計画・確認項目作成手順.md",
+      "sha256": "1a840ff5c441c2dff8b6602edd5d7d2bf01bfb4cc8c3869fcdcc5fc13c9c2bb0",
+      "sizeBytes": 10137
+    },
+    {
+      "path": "06_AI一括開発実行指示書.md",
+      "sha256": "74c50dc254ff3b001208062ce131d26f5c9e9fefcb398cd1f9063e10051a693c",
+      "sizeBytes": 9579
+    },
+    {
+      "path": "07_事前準備・環境構築チェック.md",
+      "sha256": "770131984f3c3e0153df5e94a47d6c63fcb74ad69539df6147e54bfa50cdff63",
+      "sizeBytes": 9125
+    },
+    {
+      "path": "08_未決定事項・リスク台帳.md",
+      "sha256": "8eb15807c37a2d8e536aaea8ad0ce607de5b82e68aec3b49e0d12426995cc35b",
+      "sizeBytes": 8548
+    },
+    {
+      "path": "09_要件トレーサビリティ.csv",
+      "sha256": "bbc7110d6d3244b0245c93e3262d7484eea12f259f05fff3b61aaf52a125bab0",
+      "sizeBytes": 45418
+    },
+    {
+      "path": "10_初期検証マトリクス.csv",
+      "sha256": "f267c00e88105d14a2c4a549664f4c118a1301301f3d640686c7f2bcea5f2d21",
+      "sizeBytes": 84440
+    },
+    {
+      "path": "11_実装後確認項目書テンプレート.md",
+      "sha256": "0edb3a8d527fdf2d98697dfd9f5d61bdab883cd07136f9e95d29329eeccc1200",
+      "sizeBytes": 3758
+    },
+    {
+      "path": "12_テスト素材・フィクスチャ仕様.md",
+      "sha256": "e3e125895e1c71d3d8c5f560d145e642a5a1be928351f0d52c5935bddc81d31a",
+      "sizeBytes": 5690
+    },
+    {
+      "path": "13_開発AI用スタータープロンプト.txt",
+      "sha256": "75644322b834f584f1e478fee303cfe54abcf737fc511e2d99a2a15e60557cc7",
+      "sizeBytes": 5766
+    },
+    {
+      "path": "14_画面構成・操作フロー設計.md",
+      "sha256": "78abeb70a6c3f46b045f06350ec72b794871679a026d68f695c441a983b14ee1",
+      "sizeBytes": 8677
+    },
+    {
+      "path": "15_設計レビュー結果.md",
+      "sha256": "881f4efa0818e6e97b183ebfde5c6d9a23045262f2dc808c15274ad58507c976",
+      "sizeBytes": 9044
+    },
+    {
+      "path": "16_設計決定台帳.md",
+      "sha256": "868086637104b7465fe84e23c61f8959c42b22ededd94bd773b91056fa20bae3",
+      "sizeBytes": 9023
+    },
+    {
+      "path": "17_仕様契約_継承と永続化.md",
+      "sha256": "59e5fe229d24de6cbca6ade02b50cfd824882be1958f212f25b15c5edcc413c2",
+      "sizeBytes": 10096
+    },
+    {
+      "path": "18_仕様契約_座標と構図最適化.md",
+      "sha256": "f748880e9b3f143321669b682452c616a60146309716e3becbb47c55b0e46999",
+      "sizeBytes": 8524
+    },
+    {
+      "path": "19_仕様契約_描画とエフェクト.md",
+      "sha256": "770f68dfd4e46094035851c18fc4fbb8490568b364b7c48bd9438da56837d89f",
+      "sizeBytes": 8176
+    },
+    {
+      "path": "20_仕様契約_文字素材安全.md",
+      "sha256": "7db5e78e0f426a32470b83c4ec1583a85cb14017eec0ab357e3028b5b3a1e7df",
+      "sizeBytes": 8297
+    },
+    {
+      "path": "21_品質ゲートと受入判定.md",
+      "sha256": "c3aafc6980043dbcfbf2180edcf8b9b8ca80d9a76b355bccf0e1ae9cbe64ec7a",
+      "sizeBytes": 9294
+    },
+    {
+      "path": "22_事前条件_サービス実測と未確定事項.md",
+      "sha256": "f8a0f410deb73e3cdf968761f4c5143b86ae035fc04535cb4373323644d6cc05",
+      "sizeBytes": 7909
+    },
+    {
+      "path": "23_文書整合性検証.py",
+      "sha256": "fff8add0963e269989daada2324ad11028ccde379a6f394be86502f499d8cdae",
+      "sizeBytes": 5809
+    },
+    {
+      "path": "25_ユーザー決定事項と変更記録.md",
+      "sha256": "5918f3f4f46f9c2983c0ace40f98722cf2936aa64d89e57f332b1967d677a307",
+      "sizeBytes": 5212
+    },
+    {
+      "path": "26_配信環境と段階的公開・βテスト.md",
+      "sha256": "939a8307765ea4e9247c1eb21956aa2ec3e277de1d99a5cff80fb80343c11c52",
+      "sizeBytes": 3774
+    },
+    {
+      "path": "27_GitHubをスマホで使うための操作案内方針.md",
+      "sha256": "8addd2a3d91e44e4e8edbeb4921acba2cff93fa63a4d6b0989e304a7ba842c54",
+      "sizeBytes": 4566
+    },
+    {
+      "path": "28_改修フェーズ_モジュールとデザインモック運用.md",
+      "sha256": "0792d616c690bbf3caf385acb45629d008e8648dbd674c119c36e386c51d3bfa",
+      "sizeBytes": 3943
+    },
+    {
+      "path": "29_GitHubPages公開と簡易パスワード画面.md",
+      "sha256": "d049bf41288953f1d32cc6d7c6f2599302643d0b4dd93d9563635507bac945f0",
+      "sizeBytes": 2861
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "eb7adcf04aa0841abddbb75b4078d42e4b9d680bd3222051cf0ac9bce295c812",
+      "sizeBytes": 4953
+    },
+    {
+      "path": "CLAUDE.md",
+      "sha256": "6f99b1d468dfab5abc10e968eb3ece85855bbe25f6b43960e875a00f968f2a09",
+      "sizeBytes": 2928
+    },
+    {
+      "path": "README_使い方.txt",
+      "sha256": "cb9c375660bbbf13ac8ae3f6a9a9a25af078481dc0258c9d4cc3bbbbb3b0ef3f",
+      "sizeBytes": 2023
+    }
+  ]
+}
