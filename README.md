@@ -1,10 +1,33 @@
 # banner-studio
 
-バナー制作Webアプリの開発準備資料を保管するリポジトリです。アプリ本体は未実装です。
+複数出力先向けのバナー制作Webアプリ。TypeScript / React / PixiJS v8で、編集データと素材をブラウザ内に保存します。
 
-- [開発資料の案内](docs/00_README_開発パック.md)
-- [資料整理記録・検査結果と注意事項](docs/資料整理記録.md)
-- [配置対応表とSHA-256](docs/devpack-import-audit.json)
-- [元の開発資料ZIP（保持）](banner-webapp-devpack-v0.3.2.zip)
+**初回統合実装・レビュー段階です。全機能完成ではありません。iPhone/iPad実機は未検証、GitHub Pagesは未公開です。**
 
-開発開始プロンプトと同梱スクリプトは保管資料です。資料整理は開発開始やGitHub Pages公開の承認を意味しません。
+## ローカル起動
+
+Node.js 24系を使用します。
+
+```sh
+cd app
+npm ci
+npm run dev
+```
+
+`http://127.0.0.1:5173/banner-studio/` → デモ合言葉 `banner-demo`。
+入口は偶然の訪問者向けの簡易ゲートで、実認証や機密保護ではありません。変更設定は`app/.env.example`を参照してください。
+
+制作→画像/文字の編集→出力先の調整→書き出しで3種PNGを生成します。保存済み表示を確認し、設定から定期的にZIPをバックアップしてください。素材の同梱は素材ごとの許諾とバックアップの同梱選択が必要です。
+
+## 状態・開発資料
+
+- [実装報告と未達](BUILD_REPORT.md)
+- [再開手順](HANDOFF.md) / [設計](ARCHITECTURE.md) / [実装判断](DECISIONS.md)
+- [185要件の実装・試験対応](verification/requirements_coverage.csv)
+- [218項目の後続確認書](verification/checklist.csv) / [既知の問題](verification/known-issues.md)
+- [試験環境](TEST_ENVIRONMENTS.md) / [実機確認手順](verification/ios-device-checklist.md)
+- [第三者ライセンス](licenses/README.md)
+- [元の開発資料案内](docs/00_README_開発パック.md) / [資料整理記録](docs/資料整理記録.md) / [配置とSHA-256](docs/devpack-import-audit.json)
+- [保持した開発資料ZIP](banner-webapp-devpack-v0.3.2.zip)
+
+検証: `npm run typecheck`、`npm run lint`、`npm test`、`npm run build`、`npm run e2e`（appディレクトリ）。CIは検証のみで、配信しません。初回公開、mainへのマージ、β案内には別途本人の承認が必要です。
