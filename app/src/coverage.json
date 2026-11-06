@@ -1,0 +1,927 @@
+[
+  {
+    "id": "TPL-001",
+    "name": "ベーステンプレートの作成・保存",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "TPL-002",
+    "name": "テンプレートの編集・複製・名前変更・削除",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "TPL-003",
+    "name": "複数バリエーションの追加",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "TPL-004",
+    "name": "ラベル・色・アイコングリフのVariant差分",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "TPL-005",
+    "name": "Template原本の非破壊",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "TPL-006",
+    "name": "プロジェクト固有要素の追加・削除",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "TPL-007",
+    "name": "Variantを適用したProjectのスナップショット",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "TPL-008",
+    "name": "編集デザインの別名保存",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "TPL-009",
+    "name": "レイヤーIDに基づく差分と競合警告",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "TPL-010",
+    "name": "テンプレートによる入力項目の最小化",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "LAY-001",
+    "name": "複数の出力プロファイルを登録・選択",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "LAY-002",
+    "name": "カスタム幅・高さ・縦横比",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "LAY-003",
+    "name": "絶対座標・絶対サイズ",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "LAY-004",
+    "name": "比率座標・比率サイズ",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "LAY-005",
+    "name": "9点アンカー",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "LAY-006",
+    "name": "親・セーフエリア基準の配置",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "LAY-007",
+    "name": "他オブジェクト基準と循環警告",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "LAY-008",
+    "name": "Profileごとのレイアウト上書き",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "LAY-009",
+    "name": "レイアウトの衝突・はみ出しガイド",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "LAY-010",
+    "name": "セーフエリアの表示・非表示",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "LAY-011",
+    "name": "複数のUI重なり領域・根拠データ",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "LAY-012",
+    "name": "複数サービス向けプレビュー",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "LAY-013",
+    "name": "異なる縦横比へのレイアウト切替",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "IMG-001",
+    "name": "画像の複数選択・取り込み",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "IMG-002",
+    "name": "画像の位置・倍率・回転",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "IMG-003",
+    "name": "contain / cover自動フィット",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "IMG-004",
+    "name": "個別トリミング位置",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "IMG-005",
+    "name": "EXIF向きの統一",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "IMG-006",
+    "name": "複数画像の水平・垂直整列",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "IMG-007",
+    "name": "複数画像のグリッド整列",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "IMG-008",
+    "name": "一つの画像コンテナに複数画像",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "IMG-009",
+    "name": "分割線の位置・任意角度調整",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "IMG-010",
+    "name": "装飾なし分割線",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "IMG-011",
+    "name": "装飾あり分割線",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "IMG-012",
+    "name": "分割画像ごとの移動・回転・拡大",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "IMG-013",
+    "name": "複数分割線と3枚以上の画像",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "IMG-014",
+    "name": "画像FXと分割線の効果範囲切替",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "IMG-015",
+    "name": "矩形・円・楕円・角丸マスク",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "IMG-016",
+    "name": "角丸半径と四隅指定",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "CMP-001",
+    "name": "画像ごとの優先表示領域keep",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "CMP-002",
+    "name": "画像ごとの優先除外領域avoid",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "CMP-003",
+    "name": "keep/avoidを複数設定",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "CMP-004",
+    "name": "画像元座標の正規化メタデータ",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "CMP-005",
+    "name": "相対位置・アンカーの記録",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "CMP-006",
+    "name": "keepの可視割合の評価",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "CMP-007",
+    "name": "avoidの非表示割合の評価",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "CMP-008",
+    "name": "avoidのはみ出し方向の維持",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "CMP-009",
+    "name": "角度固定の自動調整",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "CMP-010",
+    "name": "角度変更許可の自動調整",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "CMP-011",
+    "name": "回転許容範囲ゼロ",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "CMP-012",
+    "name": "位置/倍率/角度候補の共同評価",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "CMP-013",
+    "name": "制約矛盾時の診断",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "CMP-014",
+    "name": "分割ポリゴン内でのkeep/avoid評価",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "CMP-015",
+    "name": "自動候補の複数提示",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "CMP-016",
+    "name": "手動補正とProfile別保存",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "CMP-017",
+    "name": "補正前の構図への復帰",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "CMP-018",
+    "name": "探索の決定論性",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "CMP-019",
+    "name": "不自然な余白と拡大率の制約",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "TXT-001",
+    "name": "日本語テキストの入力・編集",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "TXT-002",
+    "name": "個別フォントとウェイト・サイズ",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "TXT-003",
+    "name": "字間・行間・揃え・折り返し",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "TXT-004",
+    "name": "文字全体の塗り・背景・影・縁取り",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "TXT-005",
+    "name": "文字全体のグラデーション・FX",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "TXT-006",
+    "name": "1文字ずつの円形背景",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "TXT-007",
+    "name": "文字単位装飾の規則維持",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "TXT-008",
+    "name": "絵文字・結合文字の分割安全性",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "TXT-009",
+    "name": "すみだまり効果の非破壊適用",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "TXT-010",
+    "name": "文字列が空の場合の安全な表示",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "FNT-001",
+    "name": "外部Webフォントの読み込み",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "FNT-002",
+    "name": "端末の利用可能なフォント指定",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "FNT-003",
+    "name": "フォントファイルのインポート",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "FNT-004",
+    "name": "Local Font Access非対応時の代替導線",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "FNT-005",
+    "name": "フォント読込完了待ち",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "FNT-006",
+    "name": "フォントの代替/欠落警告",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "FNT-007",
+    "name": "ライセンスメタデータ管理",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "LBL-001",
+    "name": "一般的な標準ラベルの初期収録",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "LBL-002",
+    "name": "標準ラベルを選択一覧から隠す",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "LBL-003",
+    "name": "独自ラベル登録・編集・非表示",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "LBL-004",
+    "name": "ラベルの背景・余白・角丸・アイコン",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "AST-001",
+    "name": "SVGアイコンの標準ライブラリ",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "AST-002",
+    "name": "SVGアイコンの色・回転・倍率",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "AST-003",
+    "name": "アイコングリフをVariant別に差替",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "AST-004",
+    "name": "頻用素材ライブラリへのインポート",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "AST-005",
+    "name": "素材の再配置・テンプレート埋込",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "AST-006",
+    "name": "素材更新・欠損・参照の扱い",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "AST-007",
+    "name": "紙・プラ・マスキングテープの標準装飾",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "AST-008",
+    "name": "独自装飾プリセットの保存",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "AST-009",
+    "name": "挿入画像から主要色抽出",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "AST-010",
+    "name": "パレットとティント等への適用",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "AST-011",
+    "name": "配色補助とコントラスト表示",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "FX-001",
+    "name": "レイヤーツリーの並べ替え・名称変更",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "FX-002",
+    "name": "レイヤーの表示・ロック・複製・グループ",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "FX-003",
+    "name": "非破壊ぼかしレイヤー",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "FX-004",
+    "name": "全面・矩形・円・楕円のぼかし領域",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "FX-005",
+    "name": "中心と外縁で強度が変わるぼかし",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "FX-006",
+    "name": "非破壊グラデーションレイヤー",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "FX-007",
+    "name": "単色カラーレイヤー・ティント",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "FX-008",
+    "name": "ノイズレイヤー",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "FX-009",
+    "name": "ブレンドモードの選択",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "FX-010",
+    "name": "エフェクトスタックの順序・ON/OFF",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "FX-011",
+    "name": "効果対象：下層/グループ/個別/内部選択",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "FX-012",
+    "name": "マスク・反転・フェザー",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "PRT-001",
+    "name": "テンプレート上のパーティクル追加",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "PRT-002",
+    "name": "Variant別パーティクル設定",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "PRT-003",
+    "name": "粒子種別と発生パラメータ",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "PRT-004",
+    "name": "任意時刻/フレームの静止画化",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "PRT-005",
+    "name": "シードと時刻による再現性",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "AUT-001",
+    "name": "タイトル/日付/番号等の変数バインド",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "AUT-002",
+    "name": "日付の書式変更・手動上書き",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "AUT-003",
+    "name": "シリーズごとの連番管理",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "AUT-004",
+    "name": "連番のゼロ埋め・接頭辞/接尾辞",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "AUT-005",
+    "name": "正式出力時の採番確定",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "AUT-006",
+    "name": "ファイル名への変数適用",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "DAT-001",
+    "name": "IndexedDBへのTemplate/Project保存",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "DAT-002",
+    "name": "素材Blobの保存とID参照",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "DAT-003",
+    "name": "自動保存・保存失敗の表示",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "DAT-004",
+    "name": "JSON/ZIPバックアップの外部書き出し",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "DAT-005",
+    "name": "別端末へのバックアップインポート",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "DAT-006",
+    "name": "スキーマの検証・マイグレーション",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "DAT-007",
+    "name": "素材・フォント再配布可否の制御",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "DAT-008",
+    "name": "保存容量上限・喪失への備え",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "DAT-009",
+    "name": "Undo/Redoと作業復旧",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "EXP-001",
+    "name": "PNG書き出し",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "EXP-002",
+    "name": "複数プロファイルの一括生成",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "EXP-003",
+    "name": "書き出し時のフォント・画像読込待機",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "EXP-004",
+    "name": "セーフエリアガイドの出力除外",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "EXP-005",
+    "name": "プレビューと出力の画像一致",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "EXP-006",
+    "name": "モバイルのダウンロード失敗時の代替",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "EXP-007",
+    "name": "出力解像度・透明背景・描画品質",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "UI-001",
+    "name": "iOS Safariのタッチ編集",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "UI-002",
+    "name": "Android Chromeのタッチ編集",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "UI-003",
+    "name": "PCブラウザでの操作",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "UI-004",
+    "name": "画面回転と狭い画面のパネル",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "UI-005",
+    "name": "オブジェクトのロックと誤操作防止",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "UI-006",
+    "name": "長時間編集時の操作応答性",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "UI-007",
+    "name": "GPUコンテキスト喪失時の復旧",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "UI-008",
+    "name": "主要操作の視認性と可読性",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "DBG-001",
+    "name": "モバイルからの診断パネル到達",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "DBG-002",
+    "name": "レイヤー座標・変形・出所の確認",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "DBG-003",
+    "name": "画像分割・マスク・エフェクト順序の可視化",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "DBG-004",
+    "name": "構図候補と評価内訳の可視化",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "DBG-005",
+    "name": "フォント/画像/DB/PNGエラーの分類",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "DBG-006",
+    "name": "リングバッファログとON/OFF",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "DBG-007",
+    "name": "素材なし再現ZIPの書き出し",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "DBG-008",
+    "name": "素材あり診断の明示許可",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "DBG-009",
+    "name": "隔離された診断ZIPの再インポート",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "DBG-010",
+    "name": "自己診断と機能実装状態表示",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "DBG-011",
+    "name": "描画時間・メモリ/テクスチャ推計",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "SEC-001",
+    "name": "不正SVGのサニタイズ",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "SEC-002",
+    "name": "不正JSON・危険な変数入力への対応",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "SEC-003",
+    "name": "外部画像CORS/tainted canvasの診断",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "SEC-004",
+    "name": "個人素材を無断でサーバーへ送信しない",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "SEC-005",
+    "name": "OSS/フォント/アイコンのライセンス一覧",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "QA-001",
+    "name": "型検査・Lint・Build",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "QA-002",
+    "name": "自動テストの実施結果",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "QA-003",
+    "name": "モバイル実機の試験記録",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "QA-004",
+    "name": "未実装・仮実装・実機未確認の区別",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "QA-005",
+    "name": "変更履歴と復旧手段",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "TPL-011",
+    "name": "差分適用の順序と属性出所を固定する",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "TPL-012",
+    "name": "原本スナップショットと明示的再同期の境界を守る",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "CMP-020",
+    "name": "配置ごとの構図アンカーとAsset固有領域を分離する",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "CMP-021",
+    "name": "同点時の決定論と回転範囲のハード制約を守る",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "IMG-017",
+    "name": "幾何分割線と装飾線を独立してON/OFFする",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "FX-013",
+    "name": "調整レイヤーのスコープとグループ隔離を保証する",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "FNT-008",
+    "name": "文字列をフォントAPIのtext=へ既定で送らない",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "DAT-010",
+    "name": "インポートZIPを原子処理し不正・過大ZIPを拒否する",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "DAT-011",
+    "name": "Asset更新は版管理し、既存Projectを暗黙に書き換えない",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "LAY-014",
+    "name": "サービスと用途ごとにプロファイルを分け検証状態を示す",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "QA-006",
+    "name": "要件IDと実装箇所と実行証拠を対応づける",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "QA-007",
+    "name": "未確認の実機性能や公式仕様を確認済と扱わない",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "OPS-001",
+    "name": "GitHub Pagesで初期から公開サイトを配信し、入口に簡易パスワード入力UIを設ける（実効的な認証ではない）",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "OPS-002",
+    "name": "知人βはサイトを公開のまま、本人承認後にURLと簡易ゲート用の合言葉を案内する",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "OPS-003",
+    "name": "簡易ゲートの合言葉を変更できる（参加者別アカウント管理・個別取消は不要）",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "OPS-004",
+    "name": "一般公開へ自動移行せず本人の別途明示承認を必要とする",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "OPS-005",
+    "name": "GitHub Freeの公開リポジトリとGitHub Pagesを利用し外部ホスティングを使わない。秘密情報を配信物に入れない",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "OPS-006",
+    "name": "簡易パスワードUIは実効的なアクセス制限ではないと明記し、公開コード・アセットの秘密情報を監査する",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "OPS-007",
+    "name": "GitHub操作時にiPhone/iPad向けの日本語手順を都度提示する",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "DAT-012",
+    "name": "端末内保存＋バックアップファイルを既定とし初期クラウド同期を必須としない",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "DAT-013",
+    "name": "iPhoneとiPad間でバックアップファイルを介したデータ移行を可能にする",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "QA-008",
+    "name": "本人によるiPhone・iPadの実機検証を主要な受入試験として扱う",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "QA-009",
+    "name": "初回一括開発後はモジュール単位で独立検証してから統合する",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "QA-010",
+    "name": "デザイン改修はモックの確認を経てから統合する",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "QA-011",
+    "name": "βテスター報告を要件/テスト/不具合IDに関連付けて改修を追跡する",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "SEC-006",
+    "name": "β診断情報は既定で未公開素材や個人識別情報を外部送信しない",
+    "status": "implemented_unverified / 照合中"
+  },
+  {
+    "id": "OPS-008",
+    "name": "一般向け告知時に簡易パスワードゲートを無効化できるようにする",
+    "status": "implemented_unverified / 照合中"
+  }
+]
