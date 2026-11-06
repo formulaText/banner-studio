@@ -1,3 +1,4 @@
+import { migrateWorkspace } from "./operations";
 import Dexie, { type EntityTable } from "dexie";
 import { zipSync, unzipSync, strToU8, strFromU8 } from "fflate";
 import { clone, uid, type Workspace, workspaceSchema } from "./model";
@@ -30,7 +31,10 @@ export class StudioDB extends Dexie {
   async load() {
     const s = await this.state.get("workspace");
     return s
-      ? { value: validateWorkspace(s.value), generation: s.generation }
+      ? {
+          value: validateWorkspace(migrateWorkspace(s.value)),
+          generation: s.generation,
+        }
       : undefined;
   }
   async save(
@@ -146,9 +150,7 @@ export function safeUnzip(bytes: Uint8Array): Record<string, Uint8Array> {
     throw Error("ERR_ZIP_SIZE");
   return result;
 }
-export async function readBackup(
-  blob: Blob,
-): Promise<{
+export async function readBackup(blob: Blob): Promise<{
   workspace: Workspace;
   blobs: Map<string, Blob>;
   missing: string[];
@@ -183,7 +185,7 @@ export async function readBackup(
       throw Error("ERR_BACKUP_CHECKSUM");
   }
   const w = validateWorkspace(
-    JSON.parse(strFromU8(files["data/workspace.json"])),
+    migrateWorkspace(JSON.parse(strFromU8(files["data/workspace.json"]))),
   );
   const blobs = new Map<string, Blob>(),
     missing: string[] = [];

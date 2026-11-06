@@ -24,6 +24,7 @@ export function Canvas({
   onError,
   navigate,
   zoom,
+  onZoom,
 }: {
   project: Project;
   profile: Profile;
@@ -38,6 +39,7 @@ export function Canvas({
   onError: (e: unknown) => void;
   navigate: boolean;
   zoom: number;
+  onZoom: (value: number) => void;
   candidates?: Candidate[];
 }) {
   const canvas = useRef<HTMLCanvasElement>(null),
@@ -50,6 +52,22 @@ export function Canvas({
     ),
     [shift, setShift] = useState({ x: 0, y: 0 }),
     [pan, setPan] = useState({ x: 0, y: 0 });
+  const viewport = useRef<HTMLDivElement>(null);
+  const [viewportSize, setViewportSize] = useState({ width: 600, height: 400 });
+  const pointers = useRef(new Map<number, { x: number; y: number }>());
+  const pinch = useRef<{ distance: number; zoom: number } | null>(null);
+  useEffect(() => {
+    const element = viewport.current;
+    if (!element) return;
+    const observer = new ResizeObserver(() =>
+      setViewportSize({
+        width: element.clientWidth - 8,
+        height: element.clientHeight - 44,
+      }),
+    );
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
   const callbacks = useRef({ onReport, onError });
   useEffect(() => {
     callbacks.current = { onReport, onError };
@@ -110,13 +128,14 @@ export function Canvas({
   const node = resolved.layers.find((n) => n.id === selected),
     box = node ? resolved.boxes[node.id] : undefined;
   return (
-    <div className="canvas-viewport">
+    <div className="canvas-viewport" ref={viewport}>
       <div
         className="artboard"
         style={{
           aspectRatio: `${profile.width}/${profile.height}`,
-          width: `${zoom * 100}%`,
-          transform: `translate(${pan.x}px,${pan.y}px)`,
+          width: `${Math.min(viewportSize.width, (viewportSize.height * profile.width) / profile.height) * zoom}px`,
+          maxHeight: "none",
+          transform: `translate(${pan.x + (drag.current?.mode === "pan" ? shift.x : 0)}px,${pan.y + (drag.current?.mode === "pan" ? shift.y : 0)}px)`,
         }}
       >
         <canvas ref={canvas} aria-label="バナープレビュー" />
@@ -150,6 +169,18 @@ export function Canvas({
           viewBox={`0 0 ${profile.width} ${profile.height}`}
           onPointerDown={(e) => {
             if (rendering) return;
+            pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+            e.currentTarget.setPointerCapture(e.pointerId);
+            if (pointers.current.size === 2) {
+              const [a, b] = [...pointers.current.values()];
+              pinch.current = {
+                distance: Math.hypot(a.x - b.x, a.y - b.y),
+                zoom,
+              };
+              drag.current = null;
+              setShift({ x: 0, y: 0 });
+              return;
+            }
             const bounds = e.currentTarget.getBoundingClientRect(),
               x = ((e.clientX - bounds.left) / bounds.width) * profile.width,
               y = ((e.clientY - bounds.top) / bounds.height) * profile.height;
@@ -169,13 +200,24 @@ export function Canvas({
                 ? node
                 : [...resolved.layers].reverse().find((n) => {
                     const b = resolved.boxes[n.id];
+                    const radians = (-n.rotation * Math.PI) / 180,
+                      dx = x - b.x - b.width / 2,
+                      dy = y - b.y - b.height / 2;
+                    const localX =
+                        dx * Math.cos(radians) -
+                        dy * Math.sin(radians) +
+                        b.width / 2,
+                      localY =
+                        dx * Math.sin(radians) +
+                        dy * Math.cos(radians) +
+                        b.height / 2;
                     return (
                       n.visible &&
                       n.type !== "adjustment" &&
-                      x >= b.x &&
-                      x <= b.x + b.width &&
-                      y >= b.y &&
-                      y <= b.y + b.height
+                      localX >= 0 &&
+                      localX <= b.width &&
+                      localY >= 0 &&
+                      localY <= b.height
                     );
                   });
             if (hit) {
@@ -187,6 +229,22 @@ export function Canvas({
             }
           }}
           onPointerMove={(e) => {
+            if (pointers.current.has(e.pointerId))
+              pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+            if (pinch.current && pointers.current.size === 2) {
+              const [a, b] = [...pointers.current.values()];
+              onZoom(
+                Math.max(
+                  0.3,
+                  Math.min(
+                    3,
+                    (pinch.current.zoom * Math.hypot(a.x - b.x, a.y - b.y)) /
+                      Math.max(1, pinch.current.distance),
+                  ),
+                ),
+              );
+              return;
+            }
             const d = drag.current;
             if (!d) return;
             if (d.mode === "pan") {
@@ -199,7 +257,14 @@ export function Canvas({
               y: ((e.clientY - b.top) / b.height) * profile.height - d.y,
             });
           }}
-          onPointerUp={() => {
+          onPointerUp={(e) => {
+            pointers.current.delete(e.pointerId);
+            if (pinch.current) {
+              pinch.current = null;
+              drag.current = null;
+              setShift({ x: 0, y: 0 });
+              return;
+            }
             const d = drag.current;
             if (!d) return;
             if (d.mode === "pan")
@@ -231,6 +296,8 @@ export function Canvas({
             setShift({ x: 0, y: 0 });
           }}
           onPointerCancel={() => {
+            pointers.current.clear();
+            pinch.current = null;
             drag.current = null;
             setShift({ x: 0, y: 0 });
           }}

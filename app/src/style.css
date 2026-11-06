@@ -1030,4 +1030,35 @@ pre {
   }
 }
 
-@media(max-width:800px){.topbar{height:84px;position:relative;padding-bottom:18px}.top-actions>.save-state{display:block;position:absolute;left:14px;bottom:4px;font-size:10px}}
+@media (max-width: 800px) {
+  .topbar {
+    height: 84px;
+    position: relative;
+    padding-bottom: 18px;
+  }
+  .top-actions > .save-state {
+    display: block;
+    position: absolute;
+    left: 14px;
+    bottom: 4px;
+    font-size: 10px;
+  }
+}
+
+.region-editor {
+  position: relative;
+  width: 100%;
+  background: #e1e5d7;
+  overflow: hidden;
+}
+.region-editor img,
+.region-editor svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.region-editor svg {
+  touch-action: none;
+}

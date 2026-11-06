@@ -35,11 +35,9 @@ test("S1 Template → Variant → Project → 3 PNG and persistence", async ({
     page.getByRole("heading", { name: "試験テンプレート", exact: true }),
   ).toBeVisible();
   await page.getByRole("button", { name: "プロジェクト", exact: true }).click();
-  const card = page
-    .locator("article")
-    .filter({
-      has: page.getByRole("heading", { name: "試験テンプレート", exact: true }),
-    });
+  const card = page.locator("article").filter({
+    has: page.getByRole("heading", { name: "試験テンプレート", exact: true }),
+  });
   page.once("dialog", (d) => d.accept("テスト配色"));
   await card
     .getByRole("button", { name: "バリエーションを追加", exact: true })
@@ -114,15 +112,13 @@ test("backup and anonymous diagnostics, safe SVG import, no outgoing content", a
   await page
     .getByLabel("タイトル", { exact: true })
     .fill("NEVER_SEND_PRIVATE_TEXT");
-  await page
-    .getByLabel("画像を取り込む", { exact: true })
-    .setInputFiles({
-      name: "sample.svg",
-      mimeType: "image/svg+xml",
-      buffer: Buffer.from(
-        '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="100"><script>alert(1)</script><rect width="200" height="100" fill="red"/></svg>',
-      ),
-    });
+  await page.getByLabel("画像を取り込む", { exact: true }).setInputFiles({
+    name: "sample.svg",
+    mimeType: "image/svg+xml",
+    buffer: Buffer.from(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="100"><script>alert(1)</script><rect width="200" height="100" fill="red"/></svg>',
+    ),
+  });
   await expect(page.getByRole("alert")).toContainText("1点");
   await page.getByRole("button", { name: "設定", exact: true }).click();
   let event = page.waitForEvent("download");
@@ -350,4 +346,116 @@ test("mobile layout and diagnostics reachable, canvas screenshot", async ({
     .click();
   await expect(page.getByRole("alert")).toContainText("自己診断");
   await expect(page.getByRole("alert")).toContainText("成功");
+});
+
+test("S2/S3 split slots, region drawing, bounded crop and profile isolation", async ({
+  page,
+}, info) => {
+  await enter(page);
+  const svg = (color: string) =>
+    Buffer.from(
+      `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400"><rect width="600" height="400" fill="${color}"/><circle cx="420" cy="100" r="50" fill="white"/></svg>`,
+    );
+  await page.getByLabel("画像を取り込む", { exact: true }).setInputFiles([
+    { name: "red.svg", mimeType: "image/svg+xml", buffer: svg("red") },
+    { name: "blue.svg", mimeType: "image/svg+xml", buffer: svg("blue") },
+  ]);
+  await expect(page.getByRole("alert")).toContainText("2点");
+  if (info.project.name.includes("mobile"))
+    await page.getByRole("button", { name: "レイヤー", exact: true }).click();
+  await page.getByLabel("要素を追加", { exact: true }).selectOption("split");
+  await page.getByLabel("画像 rotation", { exact: true }).fill("-20");
+  await page
+    .getByRole("button", { name: "この配置を元構図に記録", exact: true })
+    .click();
+  await page
+    .getByRole("button", { name: "画像スロットを追加", exact: true })
+    .click();
+  await page
+    .getByLabel("参照素材", { exact: true })
+    .selectOption({ label: "blue.svg" });
+  await page.getByLabel("編集する画像", { exact: true }).selectOption("0");
+  const region = page.getByLabel("元画像の領域指定", { exact: true });
+  await region.scrollIntoViewIfNeeded();
+  const bounds = (await region.boundingBox())!;
+  await page.mouse.move(
+    bounds.x + bounds.width * 0.6,
+    bounds.y + bounds.height * 0.1,
+  );
+  await page.mouse.down();
+  await page.mouse.move(
+    bounds.x + bounds.width * 0.9,
+    bounds.y + bounds.height * 0.35,
+    { steps: 6 },
+  );
+  await page.mouse.up();
+  await expect(page.getByLabel("領域 1", { exact: true })).toBeVisible();
+  await page
+    .getByLabel("回転探索モード", { exact: true })
+    .selectOption("bounded");
+  await page
+    .getByRole("button", { name: "自動構図の候補を計算", exact: true })
+    .click();
+  if (info.project.name.includes("mobile"))
+    await page.getByRole("button", { name: "キャンバス", exact: true }).click();
+  await page.getByRole("button", { name: /候補 1 · 誤差/ }).click();
+  await expect(page.getByRole("status")).toContainText("保存済み");
+  const result = await page.evaluate(async () => {
+    const root = "/banner-studio/src/";
+    const { db } = await import(root + "storage.ts");
+    const data = await db.load(),
+      p = data.value.projects[0];
+    return {
+      wide: p.profilePatches.wide,
+      square: p.profilePatches.square,
+      regions: data.value.assets[0].regions,
+    };
+  });
+  expect(result.wide.length).toBeGreaterThan(0);
+  expect(result.square).toBeUndefined();
+  expect(result.regions).toHaveLength(1);
+  await page.getByRole("button", { name: "書き出し", exact: true }).click();
+  await page
+    .getByRole("button", { name: "一括PNGを生成（試し出力）", exact: true })
+    .click();
+  await expect(page.getByRole("alert")).toContainText("3件のPNG");
+});
+test("formal serial commits once and unknown fonts block export", async ({
+  page,
+}, info) => {
+  test.skip(
+    info.project.name.includes("mobile"),
+    "transaction and renderer shared",
+  );
+  await enter(page);
+  await page.getByRole("button", { name: "書き出し", exact: true }).click();
+  await page.getByLabel("連番", { exact: true }).fill("42");
+  await page
+    .getByRole("button", { name: "正式出力・採番を確定", exact: true })
+    .click();
+  await expect(page.getByRole("alert")).toContainText("3件のPNG");
+  await page
+    .getByRole("button", { name: "正式出力・採番を確定", exact: true })
+    .click();
+  await expect(page.getByRole("alert")).toContainText("3件のPNG");
+  const state = await page.evaluate(async () => {
+    const path = "/banner-studio/src/storage.ts";
+    const { db } = await import(path);
+    const s = await db.load();
+    return { serial: s.value.projects[0].serial, next: s.value.series.default };
+  });
+  expect(state).toEqual({ serial: 42, next: 43 });
+  await page.getByRole("button", { name: "制作", exact: true }).click();
+  await page
+    .getByRole("button", { name: "T タイトル テキスト", exact: false })
+    .click();
+  await page
+    .getByLabel("フォント名", { exact: true })
+    .fill("DefinitelyMissingFont123");
+  await expect(page.getByRole("alert")).toContainText("ERR_FONT_UNAVAILABLE");
+  await page.getByRole("button", { name: "書き出し", exact: true }).click();
+  await page
+    .getByRole("button", { name: "一括PNGを生成（試し出力）", exact: true })
+    .click();
+  await expect(page.getByRole("alert")).toContainText("ERR_FONT_UNAVAILABLE");
 });

@@ -5,6 +5,7 @@ import {
   layer,
   m,
   uid,
+  record,
   placement,
   type Region,
 } from "../src/model";
@@ -294,5 +295,111 @@ describe("persistence and safety", () => {
     d.enabled = true;
     for (let i = 0; i < 400; i++) d.record("UI", "EDIT");
     expect(d.events).toHaveLength(300);
+  });
+});
+
+describe("additional operation contracts", () => {
+  it("horizontal vertical grid layout preserves locked objects", async () => {
+    const { arrangeImages } = await import("../src/operations");
+    const w = initialWorkspace(),
+      nodes = [layer("image", "a"), layer("image", "b"), layer("image", "c")];
+    nodes[2].locked = true;
+    const patches = arrangeImages(nodes, w.profiles[0], "horizontal");
+    expect(patches).toHaveLength(2);
+    const out = applyPatches(nodes, patches);
+    expect(out[0].frame.width.value).toBe(576);
+    expect(out[1].frame.x.value).toBe(608);
+    expect(out[2]).toEqual(nodes[2]);
+    expect(arrangeImages(nodes, w.profiles[0], "vertical")).toHaveLength(2);
+  });
+  it("migration validates copy and never mutates schema0 input", async () => {
+    const { migrateWorkspace } = await import("../src/operations");
+    const w = initialWorkspace(),
+      old = { ...w, schemaVersion: 0 };
+    const migrated = migrateWorkspace(old);
+    expect(migrated.schemaVersion).toBe(1);
+    expect(old.schemaVersion).toBe(0);
+    expect(() => migrateWorkspace({ ...w, schemaVersion: 10 })).toThrow(
+      "ERR_SCHEMA_VERSION",
+    );
+  });
+  it("group removal removes all descendants and source remains intact", () => {
+    const a = layer("group", "a"),
+      b = layer("group", "b"),
+      c = layer("shape", "c");
+    b.parentId = a.id;
+    c.parentId = b.id;
+    expect(applyPatches([a, b, c], [{ op: "remove", targetId: a.id }])).toEqual(
+      [],
+    );
+    expect(c.parentId).toBe(b.id);
+  });
+  it("storage aborted transaction leaves both blobs and state untouched", async () => {
+    const db = new StudioDB("abort-" + uid()),
+      w = initialWorkspace();
+    await db.save(w, 0);
+    await expect(
+      db.transaction("rw", db.state, db.blobs, async () => {
+        await db.blobs.put({ id: "temp", blob: new Blob(["x"]) });
+        await db.state.delete("workspace");
+        throw Error("simulated failure");
+      }),
+    ).rejects.toThrow();
+    expect(await db.blob("temp")).toBeUndefined();
+    expect((await db.load())?.value).toEqual(w);
+    db.close();
+  });
+  it("ZIP declared oversized entries rejected without allocating payload", () => {
+    const b = zipSync({ "manifest.json": strToU8("{}") });
+    const v = new DataView(b.buffer);
+    for (let i = 0; i < b.length - 4; i++)
+      if (v.getUint32(i, true) === 0x02014b50) {
+        v.setUint32(i + 24, 200 * 1024 * 1024, true);
+        break;
+      }
+    expect(() => safeUnzip(b)).toThrow("ERR_ZIP_PATH_OR_SIZE");
+  });
+});
+
+describe("asset-bearing backup", () => {
+  it("preserves permitted blobs through atomic restore and omits unapproved assets", async () => {
+    const w = initialWorkspace(),
+      blob = new Blob(["synthetic-asset"]);
+    const base = record();
+    w.assets = [
+      {
+        ...base,
+        name: "fixture",
+        kind: "image",
+        mime: "image/png",
+        sha256: await sha256(await blob.arrayBuffer()),
+        blobKey: base.id,
+        width: 1,
+        height: 1,
+        regions: [],
+        license: "synthetic",
+        redistributable: true,
+        library: false,
+        previousId: "",
+      },
+    ];
+    const zip = await createBackup(w, async () => blob, true);
+    const parsed = await readBackup(zip);
+    expect(await parsed.blobs.get(base.id)?.text()).toBe("synthetic-asset");
+    const target = initialWorkspace(),
+      merged = mergeWorkspace(target, parsed.workspace, parsed.blobs);
+    const db = new StudioDB("restore-" + uid());
+    await db.save(merged.workspace, 0, merged.blobs);
+    expect(
+      await (await db.blob(merged.workspace.assets[0].blobKey))?.text(),
+    ).toBe("synthetic-asset");
+    expect(merged.workspace.assets[0].id).not.toBe(base.id);
+    w.assets[0].redistributable = false;
+    const omitted = await readBackup(
+      await createBackup(w, async () => blob, true),
+    );
+    expect(omitted.blobs.size).toBe(0);
+    expect(omitted.missing).toContain(base.id);
+    db.close();
   });
 });

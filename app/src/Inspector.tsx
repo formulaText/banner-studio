@@ -1,3 +1,4 @@
+import { RegionEditor } from "./RegionEditor";
 import {
   type Layer,
   type Asset,
@@ -134,6 +135,7 @@ export function Inspector({
   onAsset,
   onOptimize,
   onRestore,
+  getBlob,
   slotIndex,
   setSlotIndex,
 }: {
@@ -144,6 +146,7 @@ export function Inspector({
   onAsset: (a: Asset) => void;
   onOptimize: () => void;
   onRestore: () => void;
+  getBlob: (id: string) => Promise<Blob | undefined>;
   slotIndex: number;
   setSlotIndex: (i: number) => void;
 }) {
@@ -697,6 +700,12 @@ export function Inspector({
           {asset && slot && (
             <details open>
               <summary>構図アシスト・keep / avoid</summary>
+              <RegionEditor
+                asset={asset}
+                regions={regions}
+                getBlob={getBlob}
+                onChange={setRegions}
+              />
               <p className="hint">
                 領域は元画像の0〜1座標。共通領域と配置固有の目標を分けられます。
               </p>

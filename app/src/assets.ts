@@ -146,11 +146,35 @@ export async function loadImage(blob: Blob): Promise<HTMLImageElement> {
     URL.revokeObjectURL(url);
   }
 }
+const fontFaces = new Map<string, FontFace>();
+export function fontAvailable(family: string): boolean {
+  if (
+    [
+      "sans-serif",
+      "serif",
+      "monospace",
+      "system-ui",
+      "cursive",
+      "fantasy",
+    ].includes(family)
+  )
+    return true;
+  if (fontFaces.get(family)?.status === "loaded") return true;
+  const context = document.createElement("canvas").getContext("2d")!;
+  const text = "あいう漢字MWi012";
+  context.font = `32px "${family.replace(/["\\]/g, "")}",monospace`;
+  const a = context.measureText(text).width;
+  context.font = `32px "${family.replace(/["\\]/g, "")}",serif`;
+  return Math.abs(a - context.measureText(text).width) < 0.01;
+}
 export async function loadFont(asset: Asset, blob: Blob) {
+  const family = `asset-${asset.id}`;
+  if (fontFaces.get(family)?.status === "loaded") return family;
   const face = new FontFace(`asset-${asset.id}`, await blob.arrayBuffer());
   try {
     await face.load();
     document.fonts.add(face);
+    fontFaces.set(face.family, face);
     return face.family;
   } catch {
     throw Error("ERR_FONT_LOAD");
@@ -170,6 +194,7 @@ export async function webFont(url: string, family: string) {
   const face = new FontFace(family, await blob.arrayBuffer());
   await face.load();
   document.fonts.add(face);
+  fontFaces.set(face.family, face);
   return face;
 }
 export async function extractColors(blob: Blob) {

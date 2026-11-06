@@ -22,7 +22,7 @@ import {
 } from "./model";
 import { bind, graphemes, resolve, type Resolved } from "./document";
 import { splitCells, clipHalf, rect, particles, seeded } from "./geometry";
-import { loadFont, loadImage } from "./assets";
+import { loadFont, loadImage, fontAvailable } from "./assets";
 const vertex = `precision highp float;
 in vec2 aPosition; out vec2 vTextureCoord; uniform vec4 uInputSize; uniform vec4 uOutputFrame; uniform vec4 uOutputTexture;
 void main(){vec2 p=aPosition*uOutputFrame.zw+uOutputFrame.xy;p.x=p.x*(2.0/uOutputTexture.x)-1.0;p.y=p.y*(2.0*uOutputTexture.z/uOutputTexture.y)-uOutputTexture.z;gl_Position=vec4(p,0.,1.);vTextureCoord=aPosition*(uOutputFrame.zw*uInputSize.zw);}`;
@@ -315,6 +315,15 @@ export class StudioRenderer {
       await loadFont(a, b);
     }
     await document.fonts.ready;
+    for (const node of resolved.layers.filter(
+      (n) => n.visible && ["text", "label"].includes(n.type),
+    )) {
+      const family = node.fontAssetId
+        ? `asset-${node.fontAssetId}`
+        : node.fontFamily;
+      if (!fontAvailable(family)) throw Error("ERR_FONT_UNAVAILABLE");
+      await document.fonts.load(`16px "${family}"`);
+    }
     for (const n of resolved.layers.filter((n) => n.visible))
       for (const slot of n.slots) {
         if (!slot.assetId) throw Error("ERR_ASSET_MISSING");

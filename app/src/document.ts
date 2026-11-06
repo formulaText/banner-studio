@@ -29,9 +29,11 @@ export function applyPatches(
     if (i < 0) throw Error("ERR_PATCH_MISSING");
     const n = layers[i];
     if (p.op === "remove") {
-      layers = layers.filter(
-        (l) => l.id !== p.targetId && l.parentId !== p.targetId,
-      );
+      const removed = new Set([p.targetId]);
+      for (let pass = 0; pass < layers.length; pass++)
+        for (const child of layers)
+          if (removed.has(child.parentId)) removed.add(child.id);
+      layers = layers.filter((l) => !removed.has(l.id));
       continue;
     }
     if (p.op === "move") {
@@ -247,7 +249,8 @@ export function bind(s: string, p: Project, profile?: Profile) {
 // Control characters must be removed from exported filenames.
 export function filename(raw: string, used: Set<string>) {
   const base =
-    Array.from(raw, c => c.charCodeAt(0) < 32 ? "_" : c).join("")
+    Array.from(raw, (c) => (c.charCodeAt(0) < 32 ? "_" : c))
+      .join("")
       .replace(/[<>:"/\\|?*]/g, "_")
       .replace(/[. ]+$/, "")
       .slice(0, 160) || "banner";

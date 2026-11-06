@@ -1,3 +1,4 @@
+import { arrangeImages } from "./operations";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   Layers,
@@ -377,7 +378,7 @@ function Studio({ onLogout }: { onLogout: () => void }) {
       target.updatedAt = new Date().toISOString();
     });
   }
-  function patch(patches: Patch[]) {
+  function patch(patches: Patch[], forceProfile = false) {
     change((next) => {
       if (mode === "template") {
         const t = next.templates.find((t) => t.id === template.id)!;
@@ -391,7 +392,7 @@ function Studio({ onLogout }: { onLogout: () => void }) {
         v.revision++;
       } else {
         const target = next.projects.find((a) => a.id === p.id)!;
-        if (scope === "profile")
+        if (scope === "profile" || forceProfile)
           target.profilePatches[profile.id] = [
             ...(target.profilePatches[profile.id] ?? []),
             ...patches,
@@ -401,7 +402,7 @@ function Studio({ onLogout }: { onLogout: () => void }) {
       }
     });
   }
-  function edit(next: Layer) {
+  function edit(next: Layer, forceProfile = false) {
     const before = resolved.layers.find((l) => l.id === next.id);
     if (!before) return;
     patch(
@@ -418,6 +419,7 @@ function Studio({ onLogout }: { onLogout: () => void }) {
           path: k,
           value: next[k],
         })),
+      forceProfile,
     );
   }
   function add(type: Layer["type"]) {
@@ -493,7 +495,7 @@ function Studio({ onLogout }: { onLogout: () => void }) {
       const exportP = clone(p),
         output: { name: string; blob: Blob; url: string }[] = [],
         used = new Set<string>();
-      if (formal && !exportP.serialConfirmed)
+      if (formal && !exportP.serialConfirmed && !exportP.serialManual)
         exportP.serial = w!.series[exportP.series] ?? 1;
       const engine = new StudioRenderer();
       try {
@@ -516,7 +518,10 @@ function Studio({ onLogout }: { onLogout: () => void }) {
           const pr = next.projects.find((q) => q.id === p.id)!;
           pr.serial = exportP.serial;
           pr.serialConfirmed = true;
-          next.series[pr.series] = pr.serial + 1;
+          next.series[pr.series] = Math.max(
+            next.series[pr.series] ?? 1,
+            pr.serial + 1,
+          );
           next.revision++;
           await persist(next);
           history.current!.commit(next);
@@ -777,6 +782,19 @@ function Studio({ onLogout }: { onLogout: () => void }) {
                 />
                 {n && (
                   <div className="layer-tools">
+                    {mode === "project" && (
+                      <button
+                        onClick={() =>
+                          updateProject((p) => {
+                            p.profilePatches[profile.id] = (
+                              p.profilePatches[profile.id] ?? []
+                            ).filter((a) => a.targetId !== n.id);
+                          })
+                        }
+                      >
+                        出力先差分を解除
+                      </button>
+                    )}
                     <button
                       onClick={() => {
                         const c = clone(n);
@@ -872,6 +890,28 @@ function Studio({ onLogout }: { onLogout: () => void }) {
                     </button>
                   </div>
                 )}
+                <details>
+                  <summary>画像をまとめて整列</summary>
+                  {(
+                    [
+                      ["horizontal", "横に整列"],
+                      ["vertical", "縦に整列"],
+                      ["grid", "グリッド整列"],
+                    ] as const
+                  ).map(([key, label]) => (
+                    <button
+                      key={key}
+                      onClick={() =>
+                        patch(
+                          arrangeImages(resolved.layers, profile, key),
+                          true,
+                        )
+                      }
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </details>
                 <div className="panel-foot">
                   <strong>原本をそのままに。</strong>
                   <p>投稿の編集はテンプレートへ自動反映されません。</p>
@@ -909,6 +949,7 @@ function Studio({ onLogout }: { onLogout: () => void }) {
                   onError={fail}
                   navigate={navigate}
                   zoom={zoom}
+                  onZoom={setZoom}
                 />
                 <div className="canvas-footer">
                   <span>
@@ -1025,7 +1066,7 @@ function Studio({ onLogout }: { onLogout: () => void }) {
                           if (n) {
                             const slots = clone(n.slots);
                             slots[slotIndex].placement = c.placement;
-                            edit({ ...n, slots });
+                            edit({ ...n, slots }, true);
                             setMessage(
                               "候補を採用しました。Undoまたは元構図への復帰ができます。",
                             );
@@ -1051,6 +1092,7 @@ function Studio({ onLogout }: { onLogout: () => void }) {
                     assets={w.assets}
                     layers={resolved.layers}
                     onChange={edit}
+                    getBlob={getBlob}
                     onAsset={(a) =>
                       change((next) => {
                         next.assets = next.assets.map((x) =>
@@ -1064,7 +1106,7 @@ function Studio({ onLogout }: { onLogout: () => void }) {
                       slots[slotIndex].placement = clone(
                         slots[slotIndex].reference,
                       );
-                      edit({ ...n, slots });
+                      edit({ ...n, slots }, true);
                     }}
                     slotIndex={slotIndex}
                     setSlotIndex={setSlotIndex}
@@ -1765,6 +1807,7 @@ function Studio({ onLogout }: { onLogout: () => void }) {
                     onChange={(v) =>
                       updateProject((p) => {
                         p.serial = v;
+                        p.serialManual = true;
                         p.serialConfirmed = false;
                       })
                     }
@@ -1773,6 +1816,7 @@ function Studio({ onLogout }: { onLogout: () => void }) {
                     onClick={() =>
                       updateProject((p) => {
                         p.serial = w.series[p.series] ?? p.serial + 1;
+                        p.serialManual = false;
                         p.serialConfirmed = false;
                       })
                     }
