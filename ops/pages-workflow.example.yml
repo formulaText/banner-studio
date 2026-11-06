@@ -1,5 +1,5 @@
-# EXAMPLE ONLY — .github/workflows に置く前に、本人の初回公開承認が必要。
-# GitHubの最新公式設定を確認し、PagesのSourceをGitHub Actionsにする。
+# EXAMPLE ONLY — 統合版作成時の参考例。配信設定の正本は .github/workflows/pages.yml。
+# 配信準備は承認済み。初回実行は別途本人の指示が必要。手順は ops/github-pages.md。
 name: Approved Pages deployment
 on:
   workflow_dispatch:

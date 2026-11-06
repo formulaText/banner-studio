@@ -30,4 +30,4 @@ npm run dev
 - [元の開発資料案内](docs/00_README_開発パック.md) / [資料整理記録](docs/資料整理記録.md) / [配置とSHA-256](docs/devpack-import-audit.json)
 - [保持した開発資料ZIP](banner-webapp-devpack-v0.3.2.zip)
 
-検証: `npm run typecheck`、`npm run lint`、`npm test`、`npm run build`、`npm run e2e`（appディレクトリ）。CIは検証のみで、配信しません。初回公開、mainへのマージ、β案内には別途本人の承認が必要です。
+検証: `npm run typecheck`、`npm run lint`、`npm test`、`npm run build`、`npm run e2e`（appディレクトリ）。PRのCIは検証のみで、配信しません。Pages配信は手動実行専用の `.github/workflows/pages.yml` を用意していますが、未実行です。設定と公開前の操作は[GitHub Pages配信手順](ops/github-pages.md)、今回の検証は[公開準備の検証記録](verification/pages-preparation.md)を参照してください。初回公開、mainへのマージ、β案内には別途本人の承認が必要です。

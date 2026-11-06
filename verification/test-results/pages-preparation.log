@@ -1,0 +1,131 @@
+2026-11-06 22:32–22:34 JST / local verification / base 9dcbf49
+
+$ npm ci --cache /workspace/work/npm-cache
+
+added 197 packages in 6s
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+
+exit: 0
+
+$ npm run typecheck
+
+> banner-studio@0.1.0 typecheck
+> tsc --noEmit
+
+
+exit: 0
+
+$ npm run lint
+
+> banner-studio@0.1.0 lint
+> eslint src tests *.ts
+
+
+exit: 0
+
+$ npm test
+
+> banner-studio@0.1.0 test
+> vitest run
+
+
+ RUN  v5.1.0 /workspace/work/banner-studio-pages/app
+
+
+ Test Files  1 passed (1)
+      Tests  23 passed (23)
+   Start at  13:32:14
+   Duration  742ms (tests 47%, transform 33%, import 15%, setup 4%, worker 1%)
+
+
+exit: 0
+
+$ VITE_GATE_ENABLED=true npm run build
+
+> banner-studio@0.1.0 build
+> tsc --noEmit && vite build
+
+vite v8.3.6 building client environment for production...
+transforming...
+✓ 2885 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                     1.08 kB │ gzip:   0.47 kB
+dist/assets/index-CBLWdYvq.css                     13.83 kB │ gzip:   3.80 kB
+dist/assets/webworkerAll-BUtI7e0E.js                0.05 kB │ gzip:   0.06 kB
+dist/assets/getTextureBatchBindGroup-Brel3mRF.js    0.34 kB │ gzip:   0.27 kB
+dist/assets/canvasUtils-DYTasOp0.js                 6.01 kB │ gzip:   2.05 kB
+dist/assets/getTexelRangeRects-GqbOnZE-.js         11.31 kB │ gzip:   2.97 kB
+dist/assets/init-Dltxc6qu.js                       14.58 kB │ gzip:   4.66 kB
+dist/assets/browserAll-wsfWjv9m.js                 43.47 kB │ gzip:  11.27 kB
+dist/assets/RenderTargetSystem-CvuQOy0g.js         78.06 kB │ gzip:  22.11 kB
+dist/assets/CanvasPool-D5y1Y-7g.js                112.99 kB │ gzip:  34.44 kB
+dist/assets/index-D084hFjO.js                     880.09 kB │ gzip: 260.73 kB
+
+[plugin builtin:vite-reporter]
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 386ms
+
+exit: 0
+
+$ npm run e2e
+
+> banner-studio@0.1.0 e2e
+> playwright test
+
+[WebServer] (node:1161) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:1174) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 14 tests using 1 worker
+
+(node:1200) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [chromium-desktop] › tests/e2e/studio.spec.ts:10:1 › gate wrong, correct, session reload and logout (3.5s)
+  ✓   2 [chromium-desktop] › tests/e2e/studio.spec.ts:23:1 › S1 Template → Variant → Project → 3 PNG and persistence (7.2s)
+  ✓   3 [chromium-desktop] › tests/e2e/studio.spec.ts:99:1 › backup and anonymous diagnostics, safe SVG import, no outgoing content (3.1s)
+[WebServer] 1:32:52 PM [vite] (client) [console.warn] PixiJS Warning:  [BindGroup] a 'textureSource' was destroyed while still bound to a shader. Remove it from the shader before destroying it.
+[WebServer] 1:32:52 PM [vite] (client) [console.warn] PixiJS Warning:  [BindGroup] a 'textureSampler' was destroyed while still bound to a shader. Remove it from the shader before destroying it.
+  ✓   4 [chromium-desktop] › tests/e2e/studio.spec.ts:149:1 › renderer integration: split FX, group isolation, deterministic PNG, missing font (2.2s)
+  ✓   5 [chromium-desktop] › tests/e2e/studio.spec.ts:331:1 › mobile layout and diagnostics reachable, canvas screenshot (2.3s)
+  ✓   6 [chromium-desktop] › tests/e2e/studio.spec.ts:351:1 › S2/S3 split slots, region drawing, bounded crop and profile isolation (6.7s)
+  ✓   7 [chromium-desktop] › tests/e2e/studio.spec.ts:423:1 › formal serial commits once and unknown fonts block export (5.7s)
+(node:1614) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   8 [chromium-mobile-emulation] › tests/e2e/studio.spec.ts:10:1 › gate wrong, correct, session reload and logout (2.5s)
+  ✓   9 [chromium-mobile-emulation] › tests/e2e/studio.spec.ts:23:1 › S1 Template → Variant → Project → 3 PNG and persistence (5.7s)
+  ✓  10 [chromium-mobile-emulation] › tests/e2e/studio.spec.ts:99:1 › backup and anonymous diagnostics, safe SVG import, no outgoing content (2.4s)
+  -  11 [chromium-mobile-emulation] › tests/e2e/studio.spec.ts:149:1 › renderer integration: split FX, group isolation, deterministic PNG, missing font
+  ✓  12 [chromium-mobile-emulation] › tests/e2e/studio.spec.ts:331:1 › mobile layout and diagnostics reachable, canvas screenshot (2.8s)
+  ✓  13 [chromium-mobile-emulation] › tests/e2e/studio.spec.ts:351:1 › S2/S3 split slots, region drawing, bounded crop and profile isolation (6.7s)
+  -  14 [chromium-mobile-emulation] › tests/e2e/studio.spec.ts:423:1 › formal serial commits once and unknown fonts block export
+
+  2 skipped
+  12 passed (53.6s)
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+
+exit: 0
+
+$ python scripts/verify_requirements.py
+{"requirements": 185, "coverage": 185, "initialCases": 218, "checklist": 218, "devicePassed": 0, "passed": true}
+
+exit: 0
+
+$ node verification/pages-smoke.mjs
+desktop: PASS initial gate, wrong/correct phrase, reload, logout, fresh session, assets, no page errors
+mobile-emulation: PASS initial gate, wrong/correct phrase, reload, logout, fresh session, assets, no page errors
+artifact boundary: PASS only index.html + assets; docs/ZIP/src/tests return 404
+
+exit: 0

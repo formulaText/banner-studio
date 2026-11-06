@@ -49,4 +49,15 @@ python scripts/verify_requirements.py
 
 ## 公開境界
 
-`.github/workflows/verify.yml` は検証のみ。`ops/pages-workflow.example.yml` は未有効の参考ファイル。初回公開の本人承認なしに配置変更・実行しない。mainマージ、公開設定変更、配信、β案内、外部契約は今回の作業に含めない。PRは未達を示すDraftとして提出する。
+`.github/workflows/verify.yml` は検証のみ。配信準備の明示指示に基づき `.github/workflows/pages.yml` を追加した（手動実行のみ・main限定・未実行）。`ops/pages-workflow.example.yml` は参考ファイル。mainマージ、Pages設定変更、初回配信、β案内、外部契約はこの準備作業に含めない。初回配信は別途本人の指示後に行う。
+
+
+## GitHub Pages公開準備（2026-11-06 JST）
+
+- 基点: main `9dcbf49`（初回統合版PR #2マージ済み）。専用ブランチ: `chore/github-pages-manual`。
+- 変更: 手動配信ワークフロー、README/参考例の案内、`ops/github-pages.md`、検証記録。`app/` のソース・base・依存・要件は変更なし。
+- ワークフローは `workflow_dispatch` のみ。main以外はスキップ。ビルド検証後に `app/dist/` のみをPagesへ渡す。既存の簡易ゲートを有効に保つ。
+- 型検査/lint/build成功、単体23合格、既存E2E12合格/2重複スキップ。ビルド成果物のPC/モバイル表示でゲート・アセット・配信範囲を確認。詳細: [検証記録](verification/pages-preparation.md)。
+- REQ-IDの完了/未完判定は変更なし。既存の185REQ対応表・未達・既知バグを継続。実機、公開URL、実際のGitHub Actions配信は未検証。既存の500 kB超チャンク警告あり。
+- 次のローカル確認: `cd app && npm ci && npm run typecheck && npm run lint && npm test && npm run build && npm run e2e`。
+- 次の利用者操作: PRレビュー → 利用者の判断でmainへマージ。初回公開を指示した後に [配信手順](ops/github-pages.md) に沿ってPagesのSourceと手動実行を設定する。今回ワークフローは起動しない。
