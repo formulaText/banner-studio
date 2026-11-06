@@ -14,5 +14,11 @@
 `docs/15_設計レビュー結果.md`、`docs/16_設計決定台帳.md`、`docs/17_仕様契約_継承と永続化.md`、`docs/18_仕様契約_座標と構図最適化.md`、`docs/19_仕様契約_描画とエフェクト.md`、`docs/20_仕様契約_文字素材安全.md`、`docs/21_品質ゲートと受入判定.md`、`docs/22_事前条件_サービス実測と未確定事項.md`も参照。旧資料の暫定記述と設計契約が矛盾する場合は設計契約を優先し、REQ-IDの変更を独断で行わない。
 
 
-## Ver.0.3 operation constraints
-Read docs/25-28. Do not start coding or publish a site based on the preparation pack alone. The owner tests on iPhone/iPad and needs Japanese mobile instructions for GitHub. Initial site access must be owner-only, later invite-only beta requires explicit approval, public release a separate approval. Data stays in the local browser plus exported backup. After initial full implementation, iterate on isolated modules and design mocks before integration and regression testing.
+## Ver.0.3 operation constraints（Ver.0.3.2確定方針に統一）
+`docs/25`～`docs/28`および`docs/29_GitHubPages公開と簡易パスワード画面.md`を参照する。準備パックだけを根拠に開発やサイト公開を開始しない。
+- GitHub Freeの公開リポジトリを使用し、サイト配信はGitHub Pagesのみを使用する。
+- 開発初期から知人βテストまで、サイトとソースコードは公開状態とする。初期は本人中心で利用し、その後に知人へURLと合言葉を案内する。本人限定・招待制のアクセス制御は設けない。
+- サイトにはJavaScriptによる簡易パスワード入力画面を設ける。これは偶然の訪問者への軽い障壁であり、厳密なアクセス制限・認証・秘密保護ではない。公開ソースコードや配信ファイルは隠せない。
+- Cloudflare等の外部ホスティングやCodespacesでの非公開プレビューは使用しない。
+- リポジトリの公開設定変更、本体開発、初回デプロイ、知人へのURL共有・β案内、一般向け告知には、それぞれ本人の明示承認が必要。今回の文書修正は開発や公開の承認を意味しない。
+- 本人はiPhone/iPadで実機検証し、GitHub操作には日本語のスマホ向け案内を必要とする。データは端末のブラウザ内に保存し、バックアップファイルへ書き出す。初回の全体実装後は、独立したモジュールとデザインモックで検証してから統合・回帰テストを行う。

@@ -267,9 +267,11 @@
       "source": "CLAUDE.md",
       "destination": "CLAUDE.md",
       "source_sha256": "6f99b1d468dfab5abc10e968eb3ece85855bbe25f6b43960e875a00f968f2a09",
-      "destination_sha256": "54a97ea260784585de3b91c128ad7a35af94e87ef7d2c0f4ea27b265f6fd3c02",
-      "size_bytes": 2933,
-      "path_reference_adjusted": true
+      "destination_sha256": "214986fbac14453fc20b3a3109c2e2305403f843e279b5c2a77a558e8e08e1ee",
+      "size_bytes": 4027,
+      "path_reference_adjusted": true,
+      "content_adjusted": true,
+      "adjustment_reason": "ユーザー指示に基づきVer.0.3節の公開方針をVer.0.3.2・29番資料へ統一"
     },
     {
       "source": "README_使い方.txt",
