@@ -2,23 +2,51 @@ import { test, expect, type Page } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 async function enter(page: Page) {
   await page.goto("./");
-  await page.getByLabel("合言葉", { exact: true }).fill("banner-demo");
+  await page.getByLabel("合言葉", { exact: true }).fill("ba7demo");
   await page.getByRole("button", { name: "制作室を開く" }).click();
   await expect(page.getByLabel("タイトル", { exact: true })).toBeVisible();
   await expect(page.getByText("描画中…")).toHaveCount(0);
 }
-test("gate wrong, correct, session reload and logout", async ({ page }) => {
+test("gate rejects old phrase, retains new session, logs out and re-enters", async ({
+  page,
+}) => {
   await page.goto("./");
-  await page.getByLabel("合言葉", { exact: true }).fill("wrong");
-  await page.getByRole("button", { name: "制作室を開く" }).click();
-  await expect(page.getByRole("alert")).toContainText("合言葉が違います");
-  await page.getByLabel("合言葉", { exact: true }).fill("banner-demo");
+  await expect(
+    page.getByText("開発用デモの合言葉：ba7demo", { exact: true }),
+  ).toBeVisible();
+  await page.evaluate(() => {
+    sessionStorage.setItem(
+      "banner-studio-gate",
+      "0e6edc8b65be8a17d8d3bebce0ff4a891b7628fed6ee15a43c59dd205c360193",
+    );
+  });
+  await page.reload();
+  await expect(page.getByLabel("合言葉", { exact: true })).toBeVisible();
+  for (const value of ["wrong", "banner-demo"]) {
+    await page.getByLabel("合言葉", { exact: true }).fill(value);
+    await page.getByRole("button", { name: "制作室を開く" }).click();
+    await expect(page.getByRole("alert")).toContainText("合言葉が違います");
+    await expect(page.getByLabel("タイトル", { exact: true })).toHaveCount(0);
+  }
+  await page.getByLabel("合言葉", { exact: true }).fill("ba7demo");
   await page.getByRole("button", { name: "制作室を開く" }).click();
   await expect(page.getByLabel("タイトル", { exact: true })).toBeVisible();
   await page.reload();
   await expect(page.getByLabel("タイトル", { exact: true })).toBeVisible();
   await page.getByLabel("ログアウト").click();
   await expect(page.getByLabel("合言葉", { exact: true })).toBeVisible();
+  expect(
+    await page.evaluate(() => sessionStorage.getItem("banner-studio-gate")),
+  ).toBeNull();
+  await page.reload();
+  await expect(page.getByLabel("合言葉", { exact: true })).toBeVisible();
+  await page.getByLabel("合言葉", { exact: true }).fill("banner-demo");
+  await page.getByRole("button", { name: "制作室を開く" }).click();
+  await expect(page.getByRole("alert")).toContainText("合言葉が違います");
+  await expect(page.getByLabel("タイトル", { exact: true })).toHaveCount(0);
+  await enter(page);
+  await page.reload();
+  await expect(page.getByLabel("タイトル", { exact: true })).toBeVisible();
 });
 test("S1 Template → Variant → Project → 3 PNG and persistence", async ({
   page,

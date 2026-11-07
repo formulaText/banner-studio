@@ -7,7 +7,7 @@
 
 - `app/`: React / TypeScript / PixiJS / Vite。`npm run build` は `tsc --noEmit && vite build`、成果物は `app/dist/`。
 - `app/vite.config.ts` は既に `base: "/banner-studio/"`。生成HTMLのJS/CSS/modulepreloadは `/banner-studio/assets/` を参照し、対象ファイルが存在します。
-- `app/src/gate.ts` は既定で有効。公開デモ `banner-demo` のSHA-256と照合し、sessionStorageで保持。配信ワークフローでも有効値を明示。アプリコード・依存・要件は変更していません。
+- `app/src/gate.ts` は既定で有効。準備検証当時の公開デモ `banner-demo` のSHA-256と照合し、sessionStorageで保持（現在の合言葉は `ba7demo`。本記録は変更前の実施結果）。配信ワークフローでも有効値を明示。アプリコード・依存・要件は変更していません。
 - ページ内の画面切り替えにパスルーターはなく、独自サブURLへの直接アクセス対応は不要です。画像等の動的URLは既存のblob/data URLを使用します。
 - `app/dist/` 直下は `index.html` と `assets/` のみ。ソース、docs、資料ZIP、テスト、個人制作素材を追加していません。ビルドへ秘密値は投入していません。
 - 既存 `.github/workflows/verify.yml` はPR時の検証のみ。追加 `pages.yml` は `workflow_dispatch` のみで、main限定。PR作成で既存の検証CIが動く場合も配信はしません。

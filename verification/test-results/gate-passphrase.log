@@ -1,0 +1,118 @@
+実施日: 2026-11-07 JST（コマンド出力の時刻はUTC）
+基点: 9339824 / fix/gate-passphrase-ba7demo
+
+## 型検査・Lint・単体テスト・ビルド
+
+> banner-studio@0.1.0 typecheck
+> tsc --noEmit
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+
+> banner-studio@0.1.0 lint
+> eslint src tests *.ts
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+
+> banner-studio@0.1.0 test
+> vitest run
+
+
+ RUN  v5.1.0 /workspace/banner-studio/app
+
+
+ Test Files  2 passed (2)
+      Tests  28 passed (28)
+   Start at  23:53:53
+   Duration  631ms (tests 31%, import 30%, transform 28%, setup 10%, worker 1%)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+
+> banner-studio@0.1.0 build
+> tsc --noEmit && vite build
+
+vite v8.3.6 building client environment for production...
+transforming...
+✓ 2885 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                     1.08 kB │ gzip:   0.47 kB
+dist/assets/index-CBLWdYvq.css                     13.83 kB │ gzip:   3.80 kB
+dist/assets/webworkerAll-DreVEeGi.js                0.05 kB │ gzip:   0.06 kB
+dist/assets/getTextureBatchBindGroup-Brel3mRF.js    0.34 kB │ gzip:   0.27 kB
+dist/assets/canvasUtils-DYTasOp0.js                 6.01 kB │ gzip:   2.05 kB
+dist/assets/getTexelRangeRects-GqbOnZE-.js         11.31 kB │ gzip:   2.97 kB
+dist/assets/init-Bs_H7Sy7.js                       14.58 kB │ gzip:   4.66 kB
+dist/assets/browserAll-DLOv7M90.js                 43.47 kB │ gzip:  11.27 kB
+dist/assets/RenderTargetSystem-CvuQOy0g.js         78.06 kB │ gzip:  22.11 kB
+dist/assets/CanvasPool-D5y1Y-7g.js                112.99 kB │ gzip:  34.44 kB
+dist/assets/index-CGZuuYK7.js                     880.08 kB │ gzip: 260.73 kB
+
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 585ms
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+
+## E2E
+
+> banner-studio@0.1.0 e2e
+> playwright test --reporter=list,json
+
+[WebServer] (node:1092) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:1105) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 14 tests using 1 worker
+
+(node:1131) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [chromium-desktop] › tests/e2e/studio.spec.ts:10:1 › gate rejects old phrase, retains new session, logs out and re-enters (9.9s)
+  ✓   2 [chromium-desktop] › tests/e2e/studio.spec.ts:51:1 › S1 Template → Variant → Project → 3 PNG and persistence (7.8s)
+  ✓   3 [chromium-desktop] › tests/e2e/studio.spec.ts:127:1 › backup and anonymous diagnostics, safe SVG import, no outgoing content (3.2s)
+[WebServer] 11:54:12 PM [vite] (client) [console.warn] PixiJS Warning:  [BindGroup] a 'textureSource' was destroyed while still bound to a shader. Remove it from the shader before destroying it.
+[WebServer] 11:54:12 PM [vite] (client) [console.warn] PixiJS Warning:  [BindGroup] a 'textureSampler' was destroyed while still bound to a shader. Remove it from the shader before destroying it.
+  ✓   4 [chromium-desktop] › tests/e2e/studio.spec.ts:177:1 › renderer integration: split FX, group isolation, deterministic PNG, missing font (2.6s)
+  ✓   5 [chromium-desktop] › tests/e2e/studio.spec.ts:359:1 › mobile layout and diagnostics reachable, canvas screenshot (2.7s)
+  ✓   6 [chromium-desktop] › tests/e2e/studio.spec.ts:379:1 › S2/S3 split slots, region drawing, bounded crop and profile isolation (10.3s)
+  ✓   7 [chromium-desktop] › tests/e2e/studio.spec.ts:451:1 › formal serial commits once and unknown fonts block export (6.5s)
+(node:2045) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   8 [chromium-mobile-emulation] › tests/e2e/studio.spec.ts:10:1 › gate rejects old phrase, retains new session, logs out and re-enters (5.4s)
+  ✓   9 [chromium-mobile-emulation] › tests/e2e/studio.spec.ts:51:1 › S1 Template → Variant → Project → 3 PNG and persistence (6.4s)
+  ✓  10 [chromium-mobile-emulation] › tests/e2e/studio.spec.ts:127:1 › backup and anonymous diagnostics, safe SVG import, no outgoing content (2.7s)
+  -  11 [chromium-mobile-emulation] › tests/e2e/studio.spec.ts:177:1 › renderer integration: split FX, group isolation, deterministic PNG, missing font
+  ✓  12 [chromium-mobile-emulation] › tests/e2e/studio.spec.ts:359:1 › mobile layout and diagnostics reachable, canvas screenshot (2.6s)
+  ✓  13 [chromium-mobile-emulation] › tests/e2e/studio.spec.ts:379:1 › S2/S3 split slots, region drawing, bounded crop and profile isolation (6.6s)
+  -  14 [chromium-mobile-emulation] › tests/e2e/studio.spec.ts:451:1 › formal serial commits once and unknown fonts block export
+
+  2 skipped
+  12 passed (1.2m)
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+
+## ビルド成果物スモーク
+desktop: PASS initial gate, wrong/old phrase rejection, new phrase login, reload, logout, re-login, fresh session, assets, no page errors
+mobile-emulation: PASS initial gate, wrong/old phrase rejection, new phrase login, reload, logout, re-login, fresh session, assets, no page errors
+artifact boundary: PASS only index.html + assets; docs/ZIP/src/tests return 404

@@ -10,7 +10,7 @@
 - アップロード先はGitHub Pages、対象は `app/dist/` のみ。リポジトリ全体、docs、資料ZIP、テスト結果は配信しません。
 - ビルドは `contents: read`、配信ジョブだけに `pages: write` と `id-token: write` を付与。配信environmentは `github-pages`。同時配信は `pages` グループで制御し、進行中の配信はキャンセルしません。
 - Viteの既存 `base: "/banner-studio/"` を維持。予定URLは `https://formulatext.github.io/banner-studio/`。アプリはパスルーティングを使わず、この入口内で画面を切り替えます。独自の深いURLや404用SPAフォールバックは追加していません。
-- `VITE_GATE_ENABLED: "true"` をビルドに渡します。既存の公開デモ合言葉 `banner-demo` とハッシュをそのまま使います。Actions Secrets/Variablesの登録は不要です。独自の合言葉への変更やゲート解除は今回行いません。
+- `VITE_GATE_ENABLED: "true"` をビルドに渡します。公開デモ合言葉 `ba7demo` に対応する `app/src/gate.ts` の既定ハッシュを使います。Actions Secrets/Variablesの登録は不要です。ゲートは有効のままです。
 - 簡易ゲートはJavaScriptのみで動き、実認証や公開ファイルの保護にはなりません。GitHubアカウントのパスワード等を設定しないでください。
 - [verify.yml](../.github/workflows/verify.yml) は従来どおりPR時の検証専用です。配信は行いません。
 
@@ -26,7 +26,7 @@
 
 1. リポジトリの `Settings`（設定）→ `Pages` を開きます。スマホでタブが見えない場合は横スクロールまたはメニューから探してください。
 2. `Build and deployment` の `Source` を **GitHub Actions** にします。表示がGitHub Actionsになったことを確認します。`Deploy from a branch` やdocsフォルダの配信は選びません。画面が異なる場合は操作を中断して状況を確認してください。
-3. ゲートは公開デモ合言葉のままです。別の非秘密の合言葉を使いたい場合は、初回実行前に変更内容を別途確認してください。
+3. ゲートの公開デモ合言葉は `ba7demo` です。別の非秘密の合言葉を使いたい場合は、初回実行前に変更内容を別途確認してください。
 4. `Actions` → `Deploy app to GitHub Pages (manual)` → `Run workflow` を開き、ブランチが **main** であることを確認して実行します。この操作で初めて配信が始まります。ワークフローが見つからない場合はPRがmainへマージ済みか確認します。
 5. `github-pages` environmentに承認ルールが設定されている場合は、対象コミットを確認して `Review deployments` から承認します。承認ルールの有無は今回変更していません。
 6. buildとdeployが緑色の成功表示になったら、environmentに表示されるURLを開きます。想定URLは `https://formulatext.github.io/banner-studio/` です。
