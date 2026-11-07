@@ -72,3 +72,12 @@ python scripts/verify_requirements.py
 - 関連REQ: OPS-001/003の今回のローカル試験範囲を確認。REQ全体の完了/未完判定と既知バグは変更なし。実機・実配信の未完項目は継続。
 - 次の確認コマンド: `cd app && npm run typecheck && npm run lint && npm test && npm run build && npm run e2e`。
 - レビュー用PRとして提出。mainへのコミット・マージ、Pages設定変更、配信ワークフローの手動起動は行わない。初回公開は別途本人の指示後。
+## 入口の合言葉表示削除（2026-11-07 JST）
+
+- 基点: main `403ffe8f5c950eaa4be151d34bce6facb886f6c1`。専用ブランチ: `fix/hide-gate-passphrase`。
+- アプリ変更は `app/src/App.tsx` の合言葉を表示する案内文1行の削除のみ。合言葉、照合処理、入力欄、エラー、セッション、ログアウト、CSSは変更なし。
+- `app/tests/e2e/studio.spec.ts` と `verification/pages-smoke.mjs` を更新。初回・誤入力後・ログアウト後の正解非表示、空のpassword入力欄、プレースホルダー非表示、正誤入力・セッション保持・再ログインを検証。
+- ローカルの型検査・Lint・単体28件・ビルド成功。E2EはPC／Pixel 7エミュレーションで12件合格、既存重複2件スキップ。成果物スモークも両表示で成功、ページ例外・アセット404なし。配信物はindex.htmlとassetsのみ。ソースと成果物に合言葉の平文表示なし。Prettier・差分検査・185REQ／218TC整合検査も成功。
+- 既存の500 kB超チャンク警告とPixiJSリソース警告は継続。REQ全体の完了/未完判定と既知バグは変更なし。関連REQ: OPS-001/003。iPhone/iPad等の実機は未検証。
+- 利用者は検証成功後のPRマージと手動再配信を承認済み。GitHub Actions・マージ・配信の最終結果はPRに記録する。現環境ではapi.github.comへのCLI接続がForbidden、公開URLへのCONNECTが403のため、再配信・公開画面検証は未実施。GitHub連携で可能なPR操作を続行する。
+- 次の検証コマンド: `cd app && npm run typecheck && npm run lint && npm test && npm run build && npm run e2e`。成果物確認は `verification/pages-preparation.md` の静的サーバーを起動して `node verification/pages-smoke.mjs`。

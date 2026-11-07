@@ -51,22 +51,32 @@ try {
     page.on("request", (r) => requests.push(r.url()));
     await page.goto(base);
     await expect(page.getByLabel("合言葉", { exact: true })).toBeVisible();
+    await expect(page.locator("body")).not.toContainText("ba7demo");
+    await expect(page.getByPlaceholder(/ba7demo/)).toHaveCount(0);
+    await expect(page.getByLabel("合言葉", { exact: true })).toHaveValue("");
+    await expect(page.getByLabel("合言葉", { exact: true })).toHaveAttribute(
+      "type",
+      "password",
+    );
     await expect(page.getByLabel("タイトル", { exact: true })).toHaveCount(0);
     for (const value of ["wrong", "banner-demo"]) {
       await page.getByLabel("合言葉", { exact: true }).fill(value);
       await page.getByRole("button", { name: "制作室を開く" }).click();
       await expect(page.getByRole("alert")).toContainText("合言葉が違います");
+      await expect(page.locator("body")).not.toContainText("ba7demo");
       await expect(page.getByLabel("タイトル", { exact: true })).toHaveCount(0);
     }
     await page.getByLabel("合言葉", { exact: true }).fill("ba7demo");
     await page.getByRole("button", { name: "制作室を開く" }).click();
     await expect(page.getByLabel("タイトル", { exact: true })).toBeVisible();
+    await expect(page.locator("body")).not.toContainText("ba7demo");
     await expect(page.getByText("描画中…")).toHaveCount(0);
     await page.reload();
     await expect(page.getByLabel("タイトル", { exact: true })).toBeVisible();
     await page.getByLabel("ログアウト").click();
     await page.reload();
     await expect(page.getByLabel("合言葉", { exact: true })).toBeVisible();
+    await expect(page.locator("body")).not.toContainText("ba7demo");
     await page.getByLabel("合言葉", { exact: true }).fill("ba7demo");
     await page.getByRole("button", { name: "制作室を開く" }).click();
     await expect(page.getByLabel("タイトル", { exact: true })).toBeVisible();
@@ -87,7 +97,7 @@ try {
     await expect(freshPage.getByLabel("合言葉", { exact: true })).toBeVisible();
     await fresh.close();
     console.log(
-      `${name}: PASS initial gate, wrong/old phrase rejection, new phrase login, reload, logout, re-login, fresh session, assets, no page errors`,
+      `${name}: PASS no passphrase hint, masked empty input, wrong/old phrase rejection, login, reload, logout, re-login, fresh session, assets, no page errors`,
     );
   }
   for (const path of [

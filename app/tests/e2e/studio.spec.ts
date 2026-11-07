@@ -1,5 +1,17 @@
 import { test, expect, type Page } from "@playwright/test";
 import { readFile } from "node:fs/promises";
+async function expectNoPassphraseHint(page: Page) {
+  await expect(page.locator("body")).not.toContainText("ba7demo");
+  await expect(page.locator("body")).not.toContainText("開発用デモの合言葉");
+  await expect(page.getByPlaceholder(/ba7demo/)).toHaveCount(0);
+}
+async function expectEmptyGate(page: Page) {
+  const input = page.getByLabel("合言葉", { exact: true });
+  await expect(input).toBeVisible();
+  await expect(input).toHaveAttribute("type", "password");
+  await expect(input).toHaveValue("");
+  await expectNoPassphraseHint(page);
+}
 async function enter(page: Page) {
   await page.goto("./");
   await page.getByLabel("合言葉", { exact: true }).fill("ba7demo");
@@ -7,13 +19,11 @@ async function enter(page: Page) {
   await expect(page.getByLabel("タイトル", { exact: true })).toBeVisible();
   await expect(page.getByText("描画中…")).toHaveCount(0);
 }
-test("gate rejects old phrase, retains new session, logs out and re-enters", async ({
+test("gate hides the phrase, rejects old input, retains session and logs out", async ({
   page,
 }) => {
   await page.goto("./");
-  await expect(
-    page.getByText("開発用デモの合言葉：ba7demo", { exact: true }),
-  ).toBeVisible();
+  await expectEmptyGate(page);
   await page.evaluate(() => {
     sessionStorage.setItem(
       "banner-studio-gate",
@@ -21,25 +31,27 @@ test("gate rejects old phrase, retains new session, logs out and re-enters", asy
     );
   });
   await page.reload();
-  await expect(page.getByLabel("合言葉", { exact: true })).toBeVisible();
+  await expectEmptyGate(page);
   for (const value of ["wrong", "banner-demo"]) {
     await page.getByLabel("合言葉", { exact: true }).fill(value);
     await page.getByRole("button", { name: "制作室を開く" }).click();
     await expect(page.getByRole("alert")).toContainText("合言葉が違います");
+    await expectNoPassphraseHint(page);
     await expect(page.getByLabel("タイトル", { exact: true })).toHaveCount(0);
   }
   await page.getByLabel("合言葉", { exact: true }).fill("ba7demo");
   await page.getByRole("button", { name: "制作室を開く" }).click();
   await expect(page.getByLabel("タイトル", { exact: true })).toBeVisible();
+  await expectNoPassphraseHint(page);
   await page.reload();
   await expect(page.getByLabel("タイトル", { exact: true })).toBeVisible();
   await page.getByLabel("ログアウト").click();
-  await expect(page.getByLabel("合言葉", { exact: true })).toBeVisible();
+  await expectEmptyGate(page);
   expect(
     await page.evaluate(() => sessionStorage.getItem("banner-studio-gate")),
   ).toBeNull();
   await page.reload();
-  await expect(page.getByLabel("合言葉", { exact: true })).toBeVisible();
+  await expectEmptyGate(page);
   await page.getByLabel("合言葉", { exact: true }).fill("banner-demo");
   await page.getByRole("button", { name: "制作室を開く" }).click();
   await expect(page.getByRole("alert")).toContainText("合言葉が違います");
